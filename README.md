@@ -1,4 +1,4 @@
-# Pipeline de CI/CD para a Aplicação "Hooy - Você autêntico"
+# Pipeline de CI/CD para a Aplicação **"Hooy - Você presente"**
 
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
@@ -7,7 +7,7 @@
 
 ## 1. Visão Geral do Projeto
 
-Este projeto documenta a implementação bem-sucedida de um pipeline de CI/CD completo e de ponta a ponta para a plataforma **"Hooy - Você autêntico"**, uma aplicação complexa construída em uma arquitetura monorepo. O objetivo principal foi substituir um processo de deploy manual e propenso a erros por um sistema totalmente automatizado e sem intervenção humana, permitindo que a equipe de desenvolvimento entregue novas funcionalidades aos ambientes de homologação e produção com alta velocidade e confiança.
+Este projeto documenta a implementação bem-sucedida de um pipeline de CI/CD completo e de ponta a ponta para a plataforma **"Hooy - Você presente"**, uma aplicação complexa construída em uma arquitetura monorepo. O objetivo principal foi substituir um processo de deploy manual e propenso a erros por um sistema totalmente automatizado e sem intervenção humana, permitindo que a equipe de desenvolvimento entregue novas funcionalidades aos ambientes de homologação e produção com alta velocidade e confiança.
 
 O pipeline automatiza todo o ciclo de vida para múltiplos serviços independentes (frontends e backends) contidos em um único repositório, garantindo consistência, confiabilidade e segurança.
 
@@ -154,4 +154,4 @@ Permissões Complexas do GitHub: Desenhadas soluções para políticas de segura
 Integração com a Plataforma de Deploy: Depurados problemas de integração validando sistematicamente a acessibilidade da imagem, tokens de autenticação e configurações de porta do serviço, identificando ao final a necessidade de uma tag :latest específica exigida pela plataforma.
 
 ## 6. Resultado do Projeto
-O projeto foi um sucesso completo. A plataforma "Hooy - Você autêntico" agora se beneficia de um processo de CI/CD profissional e totalmente automatizado. Isso empoderou a equipe de desenvolvimento ao eliminar tarefas de deploy manuais, reduzir drasticamente o erro humano e acelerar o ciclo de feedback, permitindo a entrega de valor aos usuários finais de forma mais rápida e confiável.
+O projeto foi um sucesso completo. A plataforma "Hooy - Você presente" agora se beneficia de um processo de CI/CD profissional e totalmente automatizado. Isso empoderou a equipe de desenvolvimento ao eliminar tarefas de deploy manuais, reduzir drasticamente o erro humano e acelerar o ciclo de feedback, permitindo a entrega de valor aos usuários finais de forma mais rápida e confiável.
