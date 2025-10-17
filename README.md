@@ -96,7 +96,7 @@ jobs:
       - name: Acionar Deploy de Produção
         run: curl -X POST "${{ secrets.EASYPANEL_WEBHOOK_URL_PROD_<NOME_DO_SERVICO> }}" --fail
 ```
-4.2. Dockerfile Seguro para um Serviço Frontend (/apps/<pasta-do-servico>/Dockerfile)
+### 4.2. Dockerfile Seguro para um Serviço Frontend (/apps/<pasta-do-servico>/Dockerfile)
 Este exemplo usa um build multi-stage para criar uma imagem Nginx mínima e segura para uma aplicação frontend (e.g., Vue.js), incluindo melhorias de segurança e confiabilidade.
 
 ```
@@ -142,7 +142,7 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-5. Principais Desafios e Soluções
+## 5. Principais Desafios e Soluções
 A implementação deste pipeline envolveu a superação de vários desafios do mundo real:
 
 Inconsistência de Ambientes: Resolvido com a implementação de Docker e o versionamento do package-lock.json para garantir builds 100% reproduzíveis nos ambientes local, de homologação e de produção.
@@ -153,5 +153,5 @@ Permissões Complexas do GitHub: Desenhadas soluções para políticas de segura
 
 Integração com a Plataforma de Deploy: Depurados problemas de integração validando sistematicamente a acessibilidade da imagem, tokens de autenticação e configurações de porta do serviço, identificando ao final a necessidade de uma tag :latest específica exigida pela plataforma.
 
-6. Resultado do Projeto
+## 6. Resultado do Projeto
 O projeto foi um sucesso completo. A plataforma "Hooy - Você autêntico" agora se beneficia de um processo de CI/CD profissional e totalmente automatizado. Isso empoderou a equipe de desenvolvimento ao eliminar tarefas de deploy manuais, reduzir drasticamente o erro humano e acelerar o ciclo de feedback, permitindo a entrega de valor aos usuários finais de forma mais rápida e confiável.
