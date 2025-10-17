@@ -95,3 +95,63 @@ jobs:
 
       - name: Acionar Deploy de Produção
         run: curl -X POST "${{ secrets.EASYPANEL_WEBHOOK_URL_PROD_<NOME_DO_SERVICO> }}" --fail
+```
+4.2. Dockerfile Seguro para um Serviço Frontend (/apps/<pasta-do-servico>/Dockerfile)
+Este exemplo usa um build multi-stage para criar uma imagem Nginx mínima e segura para uma aplicação frontend (e.g., Vue.js), incluindo melhorias de segurança e confiabilidade.
+
+```
+# --- Estágio 1: Ambiente de Build ---
+# Usa uma imagem Node.js completa para instalar dependências e construir a aplicação.
+FROM node:22-alpine AS builder
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# --- Estágio 2: Ambiente de Produção ---
+# Começa a partir de uma imagem Nginx limpa e leve.
+FROM nginx:stable-alpine
+
+# Adiciona o curl para as verificações de saúde (health checks).
+RUN apk add --no-cache curl
+
+# Copia apenas os arquivos da aplicação compilada do estágio 'builder'.
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Copia o arquivo de configuração do Nginx.
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Define a posse dos arquivos para o usuário não-root 'nginx' para maior segurança.
+RUN chown -R nginx:nginx /usr/share/nginx/html && \
+    touch /var/run/nginx.pid && \
+    chown -R nginx:nginx /var/run/nginx.pid && \
+    chown -R nginx:nginx /var/cache/nginx
+
+# Muda para o usuário não-root.
+USER nginx
+
+# Expõe a porta HTTP padrão.
+EXPOSE 80
+
+# Define uma verificação de saúde para permitir que a plataforma monitore o estado do serviço.
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost/ || exit 1
+
+# Comando para iniciar o servidor Nginx.
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+5. Principais Desafios e Soluções
+A implementação deste pipeline envolveu a superação de vários desafios do mundo real:
+
+Inconsistência de Ambientes: Resolvido com a implementação de Docker e o versionamento do package-lock.json para garantir builds 100% reproduzíveis nos ambientes local, de homologação e de produção.
+
+Falhas na Instalação de Dependências (EINTEGRITY): Superados problemas persistentes de rede/cache no ambiente de CI através da implementação de tratamentos de erro robustos, fallbacks de registro e estratégias de limpeza de cache.
+
+Permissões Complexas do GitHub: Desenhadas soluções para políticas de segurança a nível de organização (Third-party access, Workflow permissions) que estavam bloqueando os tokens do CI, exigindo um mergulho profundo no modelo de segurança do GitHub.
+
+Integração com a Plataforma de Deploy: Depurados problemas de integração validando sistematicamente a acessibilidade da imagem, tokens de autenticação e configurações de porta do serviço, identificando ao final a necessidade de uma tag :latest específica exigida pela plataforma.
+
+6. Resultado do Projeto
+O projeto foi um sucesso completo. A plataforma "Hooy - Você autêntico" agora se beneficia de um processo de CI/CD profissional e totalmente automatizado. Isso empoderou a equipe de desenvolvimento ao eliminar tarefas de deploy manuais, reduzir drasticamente o erro humano e acelerar o ciclo de feedback, permitindo a entrega de valor aos usuários finais de forma mais rápida e confiável.
